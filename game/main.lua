@@ -2,9 +2,10 @@ local engine = require("engine.main")
 
 local mainScene = engine:CreateScene("Main")
 
-local shape = engine.instances.Shape.new()
-table.insert(mainScene.Children, shape)
+local shape = engine.Instance("Shape")
+shape:SetScene(mainScene)
+shape.Colour = {255, 0, 0}
 
-function love.draw()
-    engine:Render()
-end
+engine.services.Runservice:RenderStep("Test", function(dt)
+    shape.Position = shape.Position + engine.Vector2.new(100 * dt, 100 * dt)
+end)

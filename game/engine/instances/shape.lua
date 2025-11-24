@@ -13,9 +13,17 @@ function shape.new()
     self.ClassName = self.Name
     self.Size = vector2.new(100, 100)
     self.Position = vector2.new(0, 0)
+    self.Rotation = 0
+    self.Colour = {255, 255, 255}
+
     self.Parent = nil
 
     return self
+end
+
+function shape:SetScene(scene)
+    self.Parent = scene
+    table.insert(scene.Children, self)
 end
 
 return shape
