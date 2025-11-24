@@ -1,4 +1,10 @@
+local engine = require("engine.main")
+
+local mainScene = engine:CreateScene("Main")
+
+local shape = engine.instances.Shape.new()
+table.insert(mainScene.Children, shape)
 
 function love.draw()
-    love.graphics.print('Hello World!', 400, 300)
+    engine:Render()
 end
