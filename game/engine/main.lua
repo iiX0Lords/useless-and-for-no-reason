@@ -2,9 +2,7 @@
 --[[
 
     TODO
-    Create colour class
     Add sprites
-    Add rotation
     Create camera
     Create InputService
 
@@ -23,6 +21,7 @@ engine.instances = {
 engine.services = {
     Runservice = require("engine.services.runservice")
 }
+engine.Colour = require("engine.math.colour")
 
 function engine:CreateScene(name)
     local newScene = sceneManager.new()
@@ -38,9 +37,9 @@ function engine:Render()
     for _, scene in pairs(scenes) do
         if scene.Active == true then
             for _, instance in pairs(scene.Children) do
-                if instance:IsA("Shape") then
-                    love.graphics.setColor(instance.Colour[1] / 255, instance.Colour[2] / 255, instance.Colour[3] / 255)
-                    love.graphics.rectangle("fill", instance.Position.x, instance.Position.y, instance.Size.x, instance.Size.y)
+                if instance.Render then
+                    love.graphics.setColor(instance.Colour.r / 255, instance.Colour.g / 255, instance.Colour.b / 255)
+                    instance:Render()
                 end
             end
         end
