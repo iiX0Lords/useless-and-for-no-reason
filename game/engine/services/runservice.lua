@@ -14,6 +14,7 @@ local instance = require("engine.instances.instance")
 local runservice = {}
 runservice.__index = runservice
 setmetatable(runservice, instance)
+runservice.new = nil
 
 runservice.loops = {}
 runservice.drawingloops = {}

@@ -19,7 +19,8 @@ engine.instances = {
     Shape = require("engine.instances.shape")
 }
 engine.services = {
-    Runservice = require("engine.services.runservice")
+    Runservice = require("engine.services.runservice"),
+    AssetManager = require("engine.services.assetmanager")
 }
 engine.Colour = require("engine.math.colour")
 
@@ -47,13 +48,7 @@ function engine:Render()
 end
 
 function engine.Instance(classname)
-    local exists = love.filesystem.getInfo("engine/instances/".. string.lower(classname) ..".lua")
-    if exists then
-        if exists.type ~= "file" then return nil end
-        local instance = require("engine/instances/".. string.lower(classname))
-        return instance.new()
-    end
-    return nil
+    return engine.services.AssetManager.AttemptRequire("engine/instances/".. string.lower(classname) ..".lua").new()
 end
 
 function love.update(dt)
