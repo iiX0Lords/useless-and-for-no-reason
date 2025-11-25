@@ -2,7 +2,6 @@
 --[[
 
     TODO
-    Add sprites
     Create camera
     Create InputService
 
@@ -20,7 +19,8 @@ engine.instances = {
 }
 engine.services = {
     Runservice = require("engine.services.runservice"),
-    AssetManager = require("engine.services.assetmanager")
+    AssetManager = require("engine.services.assetmanager"),
+    InputService = require("engine.services.inputservice")
 }
 engine.Colour = require("engine.math.colour")
 

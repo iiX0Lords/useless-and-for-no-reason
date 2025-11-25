@@ -2,10 +2,6 @@ import os
 import subprocess
 
 if __name__ == "__main__":
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     game_root = os.path.dirname(script_dir)
