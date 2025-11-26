@@ -3,8 +3,6 @@
 
     TODO
     Create camera
-    Create InputService
-
 ]]
 
 local sceneManager = require("engine.instances.scene")
@@ -33,14 +31,15 @@ function engine:CreateScene(name)
     return newScene
 end
 
-
 function engine:Render()
     for _, scene in pairs(scenes) do
         if scene.Active == true then
             for _, instance in pairs(scene.Children) do
                 if instance.Render then
-                    love.graphics.setColor(instance.Colour.r / 255, instance.Colour.g / 255, instance.Colour.b / 255)
-                    instance:Render()
+                    if instance:IsVisible(instance) then
+                        love.graphics.setColor(instance.Colour.r / 255, instance.Colour.g / 255, instance.Colour.b / 255)
+                        instance:Render()
+                    end
                 end
             end
         end
@@ -61,6 +60,7 @@ function love.draw()
     for _, loop in pairs(engine.services.Runservice.drawingloops) do
         loop.Callback()
     end
+    
 end
 
 return engine

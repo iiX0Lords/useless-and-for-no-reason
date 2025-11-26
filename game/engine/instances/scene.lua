@@ -11,6 +11,7 @@ function scene.new()
     self.Name = "Scene"
     self.ClassName = self.Name
     self.Children = {}
+    self.Camera = nil
 
     return self
 end

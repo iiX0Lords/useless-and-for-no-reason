@@ -24,10 +24,41 @@ end
 
 function shape:Render()
     love.graphics.push()
-	love.graphics.translate(self.Position.x, self.Position.y)
+	love.graphics.translate(self.Position.x + self.Parent.Camera.Position.x, self.Position.y + self.Parent.Camera.Position.y)
+    love.graphics.scale(self.Parent.Camera.Zoom, self.Parent.Camera.Zoom)
 	love.graphics.rotate(self.Rotation)
 	love.graphics.rectangle("fill", -self.Size.x/2, -self.Size.y/2, self.Size.x, self.Size.y)
 	love.graphics.pop()
+end
+
+function shape:IsVisible(instance)
+    local size = instance.Size
+    local camera = instance.Parent.Camera
+    local pos = instance.Position
+    pos = camera:ToScreenSpace(pos)
+
+    local WindowHeight = 600
+    local WindowWidth = 800
+
+    local left = pos.x - (size.x / 2)
+    local right = pos.x + (size.x / 2)
+    local top = pos.y - (size.y / 2)
+    local bottom = pos.y + (size.y / 2)
+
+    if right < 0 then
+        return false
+    end
+    if left > WindowWidth then
+        return false
+    end
+    if bottom < 0 then
+        return false
+    end
+    if top > WindowHeight then
+        return false
+    end
+
+    return true
 end
 
 function shape:SetScene(scene)

@@ -33,12 +33,19 @@ function sprite:Render()
         self:_updateVariables()
     end
 
+    love.graphics.push()
+
+    love.graphics.translate(self.Parent.Camera.Position.x, self.Parent.Camera.Position.y)
+    love.graphics.scale(self.Parent.Camera.Zoom, self.Parent.Camera.Zoom)
+
     local scale = vector2.new(
         self.Size.x / self.ImageSize.x,
         self.Size.y / self.ImageSize.y
     )
 
     love.graphics.draw(self.Image, self.Position.x , self.Position.y, self.Rotation, scale.x, scale.y, self.ImageSize.x / 2, self.ImageSize.y / 2)
+
+    love.graphics.pop()
 end
 
 return sprite
