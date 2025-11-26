@@ -55,6 +55,11 @@ engine.services.InputService.OnKeypressed(function(key)
     if key == "g" then
         cam.Zoom = cam.Zoom + 0.1
     end
+    if key == "h" then
+        for _,v in pairs(sprites) do
+            v:Destroy()
+        end
+    end
 end)
 
 engine.services.InputService.OnKeyreleased(function(key)
@@ -92,8 +97,12 @@ engine.services.Runservice:RenderStep("Test", function(dt)
     end
 
     shape.Rotation = shape.Rotation + 1 * dt
-    for _, sprite in pairs(sprites) do
-        sprite.Rotation = sprite.Rotation + 1 * dt
+    for i, sprite in pairs(sprites) do
+        if sprite.Parent == nil then
+            table.remove(sprites, i)
+            else
+            sprite.Rotation = sprite.Rotation + 1 * dt
+        end
     end
 
     if pressed then
@@ -112,5 +121,5 @@ engine.services.Runservice:OnDraw("draw", function()
             end
         end
     end
-    fps.Text = "FPS: ".. tostring(love.timer.getFPS()).. "\nInstances: ".. tostring(#mainScene.Children).."\nVisible: ".. tostring(visible)
+    fps.Text = "FPS: ".. tostring(love.timer.getFPS()).. "\nInstances: ".. tostring(#sprites).." ".. tostring(#mainScene.Children).."\nVisible: ".. tostring(visible)
 end)

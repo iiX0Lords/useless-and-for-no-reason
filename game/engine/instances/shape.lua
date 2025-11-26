@@ -22,6 +22,29 @@ function shape.new()
     return self
 end
 
+function shape:Destroy()
+    if self.Parent then
+        local children = self.Parent.Children
+        for i = #children, 1, -1 do
+            if children[i] == self then
+                table.remove(children, i)
+                break
+            end
+        end
+    end
+
+    self.Parent = nil
+    self.Position = nil
+    self.Size = nil
+    self.Colour = nil
+    self.Image = nil
+    setmetatable(self, nil)
+
+    for k in pairs(self) do
+        self[k] = nil
+    end
+end
+
 function shape:Render()
     love.graphics.push()
 	love.graphics.translate(self.Position.x + self.Parent.Camera.Position.x, self.Position.y + self.Parent.Camera.Position.y)

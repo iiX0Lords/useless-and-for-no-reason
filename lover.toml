@@ -1,0 +1,10 @@
+[package]
+name = "Game"
+description = "Okay"
+author = "lords"
+version = "1.0"
+[build]
+default = ["win64"]
+[directories]
+source = "game"
+build = "build"
