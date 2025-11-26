@@ -2,7 +2,6 @@
 --[[
 
     TODO
-    Create camera
 ]]
 
 local sceneManager = require("engine.instances.scene")
