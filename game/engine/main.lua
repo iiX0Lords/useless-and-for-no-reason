@@ -31,12 +31,22 @@ function engine:CreateScene(name)
     return newScene
 end
 
+function GetZ(instance)
+    if instance:IsA("label") then
+        return instance.ZIndex + 100000
+    end
+    return instance.ZIndex
+end
+
 function engine:Render()
     for _, scene in pairs(scenes) do
         if scene.Active == true then
-            for _, instance in pairs(scene.Children) do
+            table.sort(scene.Children, function(a, b)
+                return GetZ(a) < GetZ(b)
+            end)
+            for _, instance in ipairs(scene.Children) do
                 if instance.Render then
-                    if instance:IsVisible(instance) then
+                    if instance:IsVisible() then
                         love.graphics.setColor(instance.Colour.r / 255, instance.Colour.g / 255, instance.Colour.b / 255)
                         instance:Render()
                     end

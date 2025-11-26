@@ -10,7 +10,9 @@ local cam = engine.Instance("Camera")
 cam:SetScene(mainScene)
 cam:SetActive(true)
 
-local fps = 0
+local fps = engine.Instance("Label")
+fps:SetScene(mainScene)
+fps.Colour = engine.Colour.new(0, 255, 0)
 
 local sprites = {}
 function Spawn(pos)
@@ -21,6 +23,7 @@ function Spawn(pos)
         sprite.Position = pos
     end
     table.insert(sprites, sprite)
+    sprite.ZIndex = #sprites
 end
 
 local pressed = false
@@ -101,5 +104,13 @@ engine.services.Runservice:RenderStep("Test", function(dt)
 end)
 
 engine.services.Runservice:OnDraw("draw", function()
-    love.graphics.print(tostring(love.timer.getFPS()) .. " " .. tostring(#sprites), 400, 300)
+    local visible = 0
+    for _,v in pairs(mainScene.Children) do
+        if v.Render ~= nil then
+            if v:IsVisible() then
+                visible = visible + 1
+            end
+        end
+    end
+    fps.Text = "FPS: ".. tostring(love.timer.getFPS()).. "\nInstances: ".. tostring(#mainScene.Children).."\nVisible: ".. tostring(visible)
 end)

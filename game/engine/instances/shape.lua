@@ -31,10 +31,10 @@ function shape:Render()
 	love.graphics.pop()
 end
 
-function shape:IsVisible(instance)
-    local size = instance.Size
-    local camera = instance.Parent.Camera
-    local pos = instance.Position
+function shape:IsVisible()
+    local size = self.Size
+    local camera = self.Parent.Camera
+    local pos = self.Position
     pos = camera:ToScreenSpace(pos)
 
     local WindowHeight = 600
