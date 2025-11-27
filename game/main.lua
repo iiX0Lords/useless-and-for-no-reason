@@ -15,10 +15,21 @@ fps:SetScene(mainScene)
 fps.Colour = engine.Colour.new(0, 255, 0)
 
 local sprites = {}
+local darken = 0
+local direction = 1
+local col = engine.Colour.new(math.random(50, 255), math.random(50, 255), math.random(50, 255))
 function Spawn(pos)
-    local sprite = engine.Instance("sprite")
+    local sprite = engine.Instance("Shape")
     sprite:SetScene(mainScene)
-    sprite.Image = engine.services.AssetManager.LoadImage("assets/test.png")
+    --sprite.Image = engine.services.AssetManager.LoadImage("assets/test.png")
+    sprite.Colour = engine.Colour.new(col.r - (darken / 1.2), col.g - (darken / 1.2), col.b - (darken / 1.2))
+    if sprite.Colour.r <= -50 and sprite.Colour.g <= -50 and sprite.Colour.b <= -50 then
+        direction = direction * -1
+        sprite.Colour = engine.Colour.new(col.r - darken, col.g - darken, col.b - darken)
+    elseif sprite.Colour.r > col.r and sprite.Colour.g > col.g and sprite.Colour.b > col.b then
+        direction = direction * -1
+        sprite.Colour = engine.Colour.new(col.r - darken, col.g - darken, col.b - darken)
+    end
     if pos then
         sprite.Position = pos
     end
@@ -37,6 +48,7 @@ local movement = {
 engine.services.InputService.OnKeypressed(function(key)
     if key == "f" then
         pressed = true
+        col = engine.Colour.new(math.random(50, 255), math.random(50, 255), math.random(50, 255))
     end
 
     if key == "w" then
@@ -65,6 +77,7 @@ end)
 engine.services.InputService.OnKeyreleased(function(key)
     if key == "f" then
         pressed = false
+        darken = 0
     end
 
     if key == "w" then
@@ -109,6 +122,7 @@ engine.services.Runservice:RenderStep("Test", function(dt)
         local x, y = love.mouse.getPosition()
         local pos = cam:ToWorldSpace(engine.Vector2.new(x, y))
         Spawn(pos)
+        darken = darken + direction
     end
 end)
 
